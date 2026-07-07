@@ -1,0 +1,16 @@
+cd ~/triphoria-assignment
+cat > .gitignore << 'EOF'
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+crash.log
+crash.*.log
+
+# Backups (generated locally)
+backups/
+
+# OS
+.DS_Store
+EOF

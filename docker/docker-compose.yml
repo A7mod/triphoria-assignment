@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: triphoria-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: triphoria_admin
+      POSTGRES_PASSWORD: localdevpassword123
+      POSTGRES_DB: triphoria
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ../db/migrations:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U triphoria_admin -d triphoria"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
