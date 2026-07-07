@@ -188,3 +188,15 @@ cd ..
 ./scripts/backup.sh
 ./scripts/restore.sh
 ```
+
+
+
+## Security Notes
+
+For simplicity and reviewer convenience, this repo takes some shortcuts that would not be acceptable in a real production setup:
+
+- `dev.tfvars` and `prod.tfvars` contain hardcoded (fake) database passwords committed to git. In production, these would be excluded via `.gitignore` and injected through environment variables, a secrets manager (AWS Secrets Manager / Parameter Store), or a CI/CD secrets store — never committed in plaintext.
+- `docker-compose.yml` has a hardcoded Postgres password for local development. This is acceptable since the database is not exposed beyond localhost, but in a shared or production context it should come from a gitignored `.env` file instead.
+- The AWS provider uses dummy credentials with validation checks disabled (`skip_credentials_validation`, etc.) specifically to allow `terraform plan` to run without a real AWS account, per the assignment's requirements. This configuration would be removed before any real deployment.
+
+None of the values in this repo are real credentials — no live AWS resources or publicly exposed databases exist as part of this submission.
